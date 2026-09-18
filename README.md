@@ -88,15 +88,15 @@ graph TD
 ```mermaid
 graph TD
     subgraph WidgetTree [Widget Tree]
-        W1[Text('Привіт')] -->|Зміна типу| W2[Container()]
+        W1[Text Widget] -->|Zmina typu| W2[Container Widget]
     end
 
     subgraph ElementTree [Element Tree]
-        E1[TextElement - ВИДАЛЯЄТЬСЯ] -->|unmount| E2[ContainerElement - СТВОРЮЄТЬСЯ З НУЛЯ]
+        E1[TextElement - VIDALIAETSA] -->|unmount| E2[ContainerElement - STVORYUETSA]
     end
 
     subgraph RenderObjectTree [RenderObject Tree]
-        R1[RenderParagraph - ВИДАЛЯЄТЬСЯ] --> R2[RenderConstrainedBox - СТВОРЮЄТЬСЯ З НУЛЯ]
+        R1[RenderParagraph - VIDALIAETSA] --> R2[RenderBox - STVORYUETSA]
     end
 
     W2 --> E2 --> R2
@@ -105,7 +105,6 @@ graph TD
     style E2 fill:#99ff99,stroke:#333,stroke-width:2px
     style R1 fill:#ff9999,stroke:#333,stroke-width:2px
     style R2 fill:#99ff99,stroke:#333,stroke-width:2px
-
 ```
 
 * **Обґрунтування:** Згідно з вихідним кодом фреймворку (`Element.updateChild`), каркас перевіряє умову `Widget.canUpdate(oldWidget, newWidget)`, яка повертає `true` тільки якщо `oldWidget.runtimeType == newWidget.runtimeType` і збігаються їхні `key`. Якщо типи різні, старий елемент розмонтовується (`unmount()`), а для нового створюється абсолютно новий `RenderObject`, що збільшує навантаження на CPU.
